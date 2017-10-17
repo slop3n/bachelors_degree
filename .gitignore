@@ -1,0 +1,8 @@
+*.jpg
+*.jpeg
+*.png
+*.gif
+
+/tf_files/*
+/datasets/
+/datasets_test/
