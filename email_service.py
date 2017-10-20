@@ -1,14 +1,16 @@
 from smtplib import SMTP_SSL as SMTP
 from email.mime.text import MIMEText
+
 import argparse
 
 def sendmail(to, subject, text):
 	message = MIMEText(text, 'plain')
-	message['Subject']= subject
-	message['To'] = to
-
 	sender = 'lyubomir.bachelors.degree@gmail.com'
 	password = 'verysecurepassword'
+
+	message['To'] = to
+	message['From'] = sender
+	message['Subject']= subject
 
 	try:
 		connection = SMTP('smtp.gmail.com')
