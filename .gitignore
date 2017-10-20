@@ -3,6 +3,9 @@
 *.png
 *.gif
 
-/tf_files/*
+/tf_files/bottlenecks/*
+/tf_files/food/*
+/tf_files/models/*
+/tf_files/training_sumarries/*
 /datasets/
 /datasets_test/

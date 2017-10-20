@@ -27,6 +27,7 @@ for file in glob.glob(folder_with_urls + '*.txt'):
 		index = element.rfind('/') + 1
 		try:
 			attempted += 1
+			# most of the images not hosted on flickr are not accessible
 			if 'flickr' in element:
 				success += 1
 				request.urlretrieve(element, target_folder + filename + '/' + element[index:])
