@@ -44,13 +44,17 @@ if __name__ == "__main__":
 	target = "datasets_test/"
 
 	parser = argparse.ArgumentParser()
-	parser.add_argument("--source", help="the email of the receiver")
-	parser.add_argument("--target", help="email subject")
+	parser.add_argument("--source", help="source folder")
+	parser.add_argument("--target", help="target folder")
 	args = parser.parse_args()
 
 	if args.source:
 		source = args.source
+		if not source.endswith('/'):
+			source = source + '/'
 	if args.target:
 		target = args.target
+		if not target.endswith('/'):
+			target = target + '/'
 
 	download_files(source, target)
