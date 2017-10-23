@@ -34,7 +34,7 @@ if __name__ == "__main__":
 	parser.add_argument("--subject", help="email subject")
 	parser.add_argument("--message", help="the message")
 	args = parser.parse_args()
-
+	
 	if args.to:
 		to = args.to
 	if args.subject:

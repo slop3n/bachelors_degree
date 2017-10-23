@@ -1,7 +1,10 @@
 import os
 import time
+import decimal
 import argparse
 import datetime
+import email_service
+import label_image
 
 def watch_folder(path):
 	before = dict([(f, None) for f in os.listdir(path)])
@@ -10,6 +13,7 @@ def watch_folder(path):
 	print('as of {0} the files in the folder are: {1}'.format(current_time, ', '.join(before)))
 
 	five_minutes = 5 # * 60
+	existing_items = []
 	
 	while 1:
 		time.sleep(five_minutes)
@@ -19,6 +23,23 @@ def watch_folder(path):
 		current_time = datetime.datetime.now().strftime('%Y-%d-%m %H:%m:%S')
 
 		if added: 
+			for image in added:
+				categories = label_image.classify(image)
+				most_likely = '{0}: {1}'.format(categories[0]['label'], categories[0]['probability'])
+
+				if most_likely not in existing_items:
+					existing_items.append(most_likely)
+					text = 'a new image has been uploaded, it has a chance of being one of the follwing:\n'
+					
+					for category in categories:
+						percentage = round(category['probability'] * 100, 2)
+						text += '{0} with chance {1}'.format(category['label'], percentage)
+
+					if categories[0]['probability'] < 0.40:
+						text = 'image could not be classified correctly'
+
+					email_service.sendmail('slop3n@gmail.com', 'new image', text)
+
 			new_files = ', '.join(added)
 			print('on {0} added the files: {1}'.format(current_time, new_files))
 
