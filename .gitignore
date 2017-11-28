@@ -3,9 +3,15 @@
 *.png
 *.gif
 
-/tf_files/bottlenecks/*
-/tf_files/food/*
-/tf_files/models/*
-/tf_files/training_sumarries/*
-/datasets/
-/datasets_test/
+*./py[cod]
+*$py.class
+__pycache__/
+
+*.log
+
+*/tf_files/bottlenecks/*
+*/tf_files/food/*
+*/tf_files/models/*
+*/tf_files/training_sumarries/*
+*/datasets/
+*/datasets_test/
