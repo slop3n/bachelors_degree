@@ -1,0 +1,9 @@
+{% if items %}
+	<ul>
+		{% for item in items %}
+			<li> {{ item.label }} </li>
+		{% endfor %}
+	</ul>
+{% else %}
+	<div> no items</div>
+{% endif %}
