@@ -1,9 +1,19 @@
+<div>
+	scanned items
+</div>
 {% if items %}
 	<ul>
 		{% for item in items %}
-			<li> {{ item.label }} </li>
+			<li> <a href="{% url 'tensorflow_api:detail' item.id %}" >{{ item.label }} </a></li>
 		{% endfor %}
 	</ul>
-{% else %}
-	<div> no items</div>
 {% endif %}
+
+please select a file to scan
+
+<form action="{% url 'tensorflow_api:scan' %}" method="post">
+	{% csrf_token %}
+	<input type="file" name="file">
+	<button type="submit">scan image</button>
+</form>
+
