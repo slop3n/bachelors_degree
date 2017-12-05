@@ -1,19 +1,38 @@
+{% load render_table from django_tables2 %}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>lyubomirs bachelors</title>
+	<script src="https://code.jquery.com/jquery-3.2.1.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+	<style type="text/css">
+		.label{ 
+		    display: none;
+		    color: inherit;
+		    text-align: left;
+		    font-size: 100%;
+		    font-weight: normal;
+		    border-radius: 0;
+		}
+	</style>
+</head>
+<body>
+
 <div>
-	scanned items
+	{% render_table table %}
 </div>
-{% if items %}
-	<ul>
-		{% for item in items %}
-			<li> <a href="{% url 'tensorflow_api:detail' item.id %}" >{{ item.label }} </a></li>
-		{% endfor %}
-	</ul>
-{% endif %}
 
-please select a file to scan
+<div>
+	please select a file to scan
+	<form action="{% url 'tensorflow_api:scan' %}" method="post" enctype="multipart/form-data">
+		{% csrf_token %}
+		<input type="file" name="image">
+		<button type="submit">scan image</button>
+	</form>
+</div>
 
-<form action="{% url 'tensorflow_api:scan' %}" method="post">
-	{% csrf_token %}
-	<input type="file" name="file">
-	<button type="submit">scan image</button>
-</form>
 
+</body>
+</html>

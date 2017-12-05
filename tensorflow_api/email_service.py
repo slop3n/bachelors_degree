@@ -21,25 +21,24 @@ def sendmail(to, subject, text):
 	except Exception as e:
 		print('exception occured')
 
+if __name__ == "__main__":
 
-# if __name__ == "__main__":
+	# some default values in case no arguments are given
+	to = "slop3n@gmail.com"
+	subject = "cat facts"
+	message = "hello, you just subscribed to cat facts daily"
 
-# 	# some default values in case no arguments are given
-# 	to = "slop3n@gmail.com"
-# 	subject = "cat facts"
-# 	message = "hello, you just subscribed to cat facts daily"
-
-# 	parser = argparse.ArgumentParser()
-# 	parser.add_argument("--to", help="the email of the receiver")
-# 	parser.add_argument("--subject", help="email subject")
-# 	parser.add_argument("--message", help="the message")
-# 	args = parser.parse_args()
+	parser = argparse.ArgumentParser()
+	parser.add_argument("--to", help="the email of the receiver")
+	parser.add_argument("--subject", help="email subject")
+	parser.add_argument("--message", help="the message")
+	args = parser.parse_args()
 	
-# 	if args.to:
-# 		to = args.to
-# 	if args.subject:
-# 		subject = args.subject
-# 	if args.message:
-# 		message = args.message
+	if args.to:
+		to = args.to
+	if args.subject:
+		subject = args.subject
+	if args.message:
+		message = args.message
 
-# 	sendmail(to, subject, message)
+	sendmail(to, subject, message)

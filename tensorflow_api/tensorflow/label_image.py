@@ -19,12 +19,14 @@ from __future__ import print_function
 
 import argparse
 import sys
+import os 
 
 import numpy as np
 import tensorflow as tf
+django_dir = "tensorflow_api/tensorflow/"
 file_name = "3.jpg"
-model_file = "tf_files/retrained_graph.pb"
-label_file = "tf_files/retrained_labels.txt"
+model_file = django_dir+ "tf_files/retrained_graph.pb"
+label_file = django_dir+ "tf_files/retrained_labels.txt"
 input_height = 224
 input_width = 224
 input_mean = 128
@@ -33,6 +35,7 @@ input_layer = "input"
 output_layer = "final_result"
 
 def classify(image):
+  print('dir: ' + os.getcwd())
   graph = load_graph(model_file)
   t =  read_tensor_from_image_file(image, input_height, input_width, input_mean, input_std)
 
