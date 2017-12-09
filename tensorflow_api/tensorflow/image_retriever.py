@@ -49,8 +49,8 @@ def download_files(source, target):
 if __name__ == "__main__":
 
 	# some default values in case no arguments are given
-	source = "url_files_test/"
-	target = "datasets_test/"
+	source = "url_files/"
+	target = "datasets/"
 
 	parser = argparse.ArgumentParser()
 	parser.add_argument("--source", help="source folder")
