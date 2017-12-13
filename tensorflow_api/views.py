@@ -1,25 +1,26 @@
-from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse, HttpResponseRedirect
-from django_tables2 import RequestConfig
+from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.views import generic
 from django.conf import settings
 from django.utils import timezone
+from django.core import serializers
+from django.core.serializers.json import Serializer as Builtin_Serializer
 from django.core.files.storage import FileSystemStorage
 from .models import ScannedItem
 from .tensorflow import label_image
-from .scanned_item import ScannedItemsTable
 from . import email_service
 
 def index(request):
-	table = ScannedItemsTable(ScannedItem.objects.order_by('-scanned_on'))
-	RequestConfig(request).configure(table)
+	return render(request, 'tensorflow_api/index.html')
 
-	return render(request, 'tensorflow_api/index.html', { 'table': table })
+def items(request):
+	items =  ScannedItem.objects.order_by('-scanned_on')
+	output = { 'data': list(items.values()), 'success':True, 'total':4 }
+
+	return JsonResponse(output, safe=False)
 
 def detail(request, item_id):
-	item = get_object_or_404(ScannedItem, pk=item_id)
-
 	return render(request, 'tensorflow_api/detail.html', { 'item': item })
 
 def scan(request):
