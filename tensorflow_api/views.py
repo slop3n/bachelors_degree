@@ -3,6 +3,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.urls import reverse
 from django.views import generic
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
 from django.utils import timezone
 from django.core import serializers
 from django.core.serializers.json import Serializer as Builtin_Serializer
@@ -16,13 +17,14 @@ def index(request):
 
 def items(request):
 	items =  ScannedItem.objects.order_by('-scanned_on')
-	output = { 'data': list(items.values()), 'success':True, 'total':4 }
+	output = { 'data': list(items.values()), 'success':True, 'total':items.count() }
 
 	return JsonResponse(output, safe=False)
 
 def detail(request, item_id):
 	return render(request, 'tensorflow_api/detail.html', { 'item': item })
 
+@csrf_exempt
 def scan(request):
 	file = request.FILES['image']
 	fs = FileSystemStorage();
