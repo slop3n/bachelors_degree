@@ -8,6 +8,7 @@ from django.utils import timezone
 from django.core import serializers
 from django.core.serializers.json import Serializer as Builtin_Serializer
 from django.core.files.storage import FileSystemStorage
+from django.db.models import Count
 from .models import ScannedItem
 from .tensorflow import label_image
 from . import email_service
@@ -20,6 +21,10 @@ def items(request):
 	output = { 'data': list(items.values()), 'success':True, 'total':items.count() }
 
 	return JsonResponse(output, safe=False)
+
+def chart(request):
+	items =  ScannedItem.objects.values('label').annotate(data=Count('label'))
+	return JsonResponse(list(items), safe=False)
 
 def detail(request, item_id):
 	return render(request, 'tensorflow_api/detail.html', { 'item': item })

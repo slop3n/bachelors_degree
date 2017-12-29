@@ -9,7 +9,7 @@
 	<script src="https://kendo.cdn.telerik.com/2017.3.1026/js/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="https://kendo.cdn.telerik.com/2017.3.1026/js/kendo.all.min.js"></script>
-	<style type="text/css" media="screen">
+	<script src="https://code.highcharts.com/highcharts.js"></script>
 </style>
 </head>
 <body>
@@ -36,17 +36,30 @@
 				<div id="items-grid"></div>
 			</div>
 			<div class="col-md-4">
-				please select a file to scan
+				<h2>Please select a file to scan</h2>
 				<form action="{% url 'tensorflow_api:scan' %}" method="post" enctype="multipart/form-data">
-					{% csrf_token %}
-					<input type="file" name="image">
-					<button type="submit">scan image</button>
+					<input type="file" id="image" name="image">
+					<button class="k-button" type="submit">scan image</button>
 				</form>
+
+				<div id="chart"></div>
 			</div>
+			<br>
 		</div>
+		<br/><br/>
 	</div>
 	<script>
 		$(function(){
+            $("#image").kendoUpload({
+            	multiple:false,
+   				localization: {
+		            select: "select"
+		        },
+		        validation: {
+                	allowedExtensions: [".jpg", ".png", ".jpeg"],
+            	}
+            });
+
 			$("#items-grid").kendoGrid({
 				dataSource: {
 					transport: {
@@ -55,7 +68,7 @@
 					schema: { total: "total", data: "data" },
 					pageSize:10,
 				},
-				height:500,
+				height:450,
 				filterable: true,
 				pageable: {
 					input: true,
