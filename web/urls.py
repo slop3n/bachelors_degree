@@ -15,8 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.http import HttpResponseRedirect
 
 urlpatterns = [
+	url(r'^$', lambda r: HttpResponseRedirect('tensorflow_api/')),
     url(r'^tensorflow_api/', include('tensorflow_api.urls')),
     url(r'^admin/', admin.site.urls),
 ]

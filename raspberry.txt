@@ -1,0 +1,5 @@
+ssh pi@192.168.9.189
+scp -rp pi@192.168.9.189:/home/pi/photos ~/Downloads/
+
+crontab -e 
+*/5 * * * * /home/pi/photo.sh
