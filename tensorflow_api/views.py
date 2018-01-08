@@ -52,8 +52,7 @@ def scan(request):
 			text += '{0} with chance {1}'.format(category['label'], percentage)
 		
 		email_service.sendmail('slop3n@gmail.com', 'new image', text)
-	else:
+	# else:
 		# email_service.sendmail('slop3n@gmail.com', 'new image', 'an image has been sent from the raspberry but it was not recognized')
-
 
 	return HttpResponseRedirect(reverse('tensorflow_api:index'))
