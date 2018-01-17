@@ -3,7 +3,7 @@ The mobilenet archiceture can be 0.25, 0.50, 0.75, 1.0, greater scale will be mo
 
 ```
 	IMAGE_SIZE=224
-	ARCHITECTURE="mobilenet_0.50_${IMAGE_SIZE}"
+	ARCHITECTURE="mobilenet_1.0_${IMAGE_SIZE}"
 ```
 
 ```

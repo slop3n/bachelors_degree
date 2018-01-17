@@ -1,15 +1,17 @@
-cookie
-cake
-sandwich
-toast
-whiskey
 beer
-frenchfries
-pizza
-cheese
-hotdog
+sandwich
 bonbon
 croissant
-burger
+whiskey
+banana
+pizza
+cookie
+cake
+apple
+cheese
+hotdog
 tea
+frenchfries
 roll bread
+orange
+burger
