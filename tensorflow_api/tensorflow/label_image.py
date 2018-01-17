@@ -49,18 +49,14 @@ def classify(image):
   results = np.squeeze(results)
 
   labels = load_labels(label_file)
-  top_elements_indices = results.argsort()[:][::-1]
-  
-  counter = 0
-  array = []
-  for i in top_elements_indices:
-    if not counter + 1 >= len(top_elements_indices):
-      next_element = top_elements_indices[counter + 1]
-      if (results[i] - results[next_element]) > 0.50:
-        array.append({'label': labels[i], 'probability': results[i] })
-    counter+=1
+  top_sorted_indices = results.argsort()[:][::-1]
+  top_element = top_sorted_indices[0]
+  element = {'label': labels[top_element], 'probability': results[top_element]}
 
-  return array
+  if element['probability'] > 0.50:
+    return element
+
+  return {}
 
 def load_graph(model_file):
   graph = tf.Graph()

@@ -36,22 +36,16 @@ def scan(request):
 	filename = fs.save('images/'+file.name, file)
 	uploaded_file_url = fs.url(filename)
 
-	categories = label_image.classify(uploaded_file_url)
+	category = label_image.classify(uploaded_file_url)
+	if category:
+		percentage = round(category['probability'] * 100, 5)
 
-	if categories:
-		first = categories[0]
-		percentage = round(first['probability'] * 100, 2)
+		if not ScannedItem.objects.filter(label=category['label'], probability=percentage).exists():
+			item = ScannedItem(label=category['label'], probability=percentage, scanned_on=timezone.now())
+			item.save()
 
-		item = ScannedItem(label=first['label'], probability=percentage, scanned_on=timezone.now())
-		item.save()
-
-		text = 'a new image has been uploaded, it has a chance of being one of the follwing:\n'
-
-		for category in categories:
-			percentage = round(category['probability'] * 100, 2)
-			text += '{0} with chance {1}'.format(category['label'], percentage)
-		
-		email_service.sendmail('slop3n@gmail.com', 'new image', text)
+			text = 'a new image has been uploaded, it has a ' + str(round(percentage, 3)) + ' percent chance of being ' + category['label']
+			email_service.sendmail('slop3n@gmail.com', 'new image' + category['label'], text)
 	# else:
 		# email_service.sendmail('slop3n@gmail.com', 'new image', 'an image has been sent from the raspberry but it was not recognized')
 
