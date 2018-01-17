@@ -1,7 +1,8 @@
 DATE=$(date +"%H")
-if [ "$DATE" -get 7 -a "$DATE" -le 18 ]
+if [ "$DATE" -ge 9 -a "$DATE" -le 19 ]
   then
-    DATE2=$(date +"%Y-%m-%d_%H%M")
-    raspistill -o /home/pi/photos/$DATE2.jpg
-    curl -F image=@/home/pi/photos/$DATE2.jpg lpetrov.me:8000/tensorflow_api/scan/
+    DAY=$(date +"%Y-%m")
+    HOUR=$(date +"%H-%M")
+    raspistill -o /home/pi/photos/$DAY/$HOUR.jpg
+    curl -F image=@/home/pi/photos/$DAY/$HOUR.jpg lpetrov.me:8000/tensorflow_api/scan/
 fi
