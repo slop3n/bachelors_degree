@@ -32,17 +32,39 @@
 	</nav>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-8">
+			<div class="col-md-6">
 				<div id="items-grid"></div>
 			</div>
-			<div class="col-md-4">
-				<h2>Please select a file to scan</h2>
+				<div class="col-md-3">
+				<h4>The neural network is trained to recognize the following categories:</h2>
+				<ol>
+					<li>apples</li>
+					<li>bananas</li>
+					<li>beer</li>
+					<li>bonbons</li>
+					<li>burgers</li>
+					<li>cakes</li>
+					<li>cheese</li>
+					<li>cookies</li>
+					<li>croissants</li>
+					<li>french fries</li>
+					<li>hotdogs</li>
+					<li>oranges</li>
+					<li>pizza</li>
+					<li>roll breads</li>
+					<li>sandwiches</li>
+					<li>tea</li>
+					<li>toasts</li>
+					<li>whiskey</li>
+				</ul>
+			</div>
+			<div class="col-md-3">
+				
+				<h4>Please select a file to scan</h2>
 				<form action="{% url 'tensorflow_api:scan' %}" method="post" enctype="multipart/form-data">
 					<input type="file" id="image" name="image">
 					<button class="k-button" type="submit">scan image</button>
 				</form>
-
-				<div id="chart"></div>
 			</div>
 			<br>
 		</div>
@@ -50,15 +72,15 @@
 	</div>
 	<script>
 		$(function(){
-            $("#image").kendoUpload({
-            	multiple:false,
-   				localization: {
-		            select: "select"
-		        },
-		        validation: {
-                	allowedExtensions: [".jpg", ".png", ".jpeg"],
-            	}
-            });
+			$("#image").kendoUpload({
+				multiple:false,
+				localization: {
+					select: "select"
+				},
+				validation: {
+					allowedExtensions: [".jpg", ".png", ".jpeg"],
+				}
+			});
 
 			$("#items-grid").kendoGrid({
 				dataSource: {
@@ -68,7 +90,7 @@
 					schema: { total: "total", data: "data" },
 					pageSize:10,
 				},
-				height:450,
+				height:430,
 				filterable: true,
 				pageable: {
 					input: true,
