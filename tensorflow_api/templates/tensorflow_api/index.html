@@ -10,7 +10,24 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script src="https://kendo.cdn.telerik.com/2017.3.1026/js/kendo.all.min.js"></script>
 	<script src="https://code.highcharts.com/highcharts.js"></script>
-</style>
+	<style type="text/css" media="screen">
+		.k-grid td{
+			padding:10px;
+		}
+
+		.k-grid tr:nth-child(even){
+			background: #f3f4f5
+		}
+
+		.k-grid .k-grouping-header{
+			background:#f3f4f5;
+			color:#444444;
+		}
+
+		.k-grid th .k-link{
+			color:#444444 !important;
+		}
+	</style>
 </head>
 <body>
 	<nav class="navbar navbar-default">
@@ -92,24 +109,27 @@
 					schema: { total: "total", data: "data" },
 					pageSize:10,
 				},
-				height:440,
 				filterable: true,
 				pageable: {
 					input: true,
 					numeric: false
 				},
+
+				groupable:true,
 				sortable: true,
 				columns: [{
 					field: "label",
-					title: "labeled as",
+					title: "Labeled as",
+					width: 140,
 				}, {
 					field: "scanned_on",
-					title: "date",
-					template: "#= kendo.toString(kendo.parseDate(scanned_on), 'on dd/MM/yyyy at HH:mm') #"
+					title: "<div class='text-center'>Scanned on</div>",
+					template: "<div class='text-center'>#= kendo.toString(kendo.parseDate(scanned_on), 'on dd/MM/yyyy at HH:mm') #</div>"
 				}, {
 					field: "probability",
-					title: "probability",
+					title: "Probability",
 					format: "{0:c}%",
+					width:130,
 				}]
 			});
 		});
