@@ -12,6 +12,7 @@ from django.db.models import Count
 from .models import ScannedItem
 from .tensorflow import label_image
 from . import email_service
+import datetime
 
 def index(request):
 	return render(request, 'tensorflow_api/index.html')
@@ -39,13 +40,17 @@ def scan(request):
 	category = label_image.classify(uploaded_file_url)
 	if category:
 		percentage = round(category['probability'] * 100, 5)
+		print(uploaded_file_url)
 
-		if not ScannedItem.objects.filter(label=category['label'], probability=percentage).exists():
+		if not ScannedItem.objects.filter(label=category['label'], probability=percentage, 
+			scanned_on__gt=datetime.datetime.today()-datetime.timedelta(days=1)).exists():
 			item = ScannedItem(label=category['label'], probability=percentage, scanned_on=timezone.now())
 			item.save()
 
+			subject = 'new image ' + category['label']
 			text = 'a new image has been uploaded, it has a ' + str(round(percentage, 3)) + ' percent chance of being ' + category['label']
-			email_service.sendmail('slop3n@gmail.com', 'new image' + category['label'], text)
+
+			email_service.sendmail('slop3n@gmail.com', subject, text)
 	# else:
 		# email_service.sendmail('slop3n@gmail.com', 'new image', 'an image has been sent from the raspberry but it was not recognized')
 
