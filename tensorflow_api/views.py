@@ -40,7 +40,6 @@ def scan(request):
 	category = label_image.classify(uploaded_file_url)
 	if category:
 		percentage = round(category['probability'] * 100, 5)
-		print(uploaded_file_url)
 
 		if not ScannedItem.objects.filter(label=category['label'], probability=percentage, 
 			scanned_on__gt=datetime.datetime.today()-datetime.timedelta(days=1)).exists():
