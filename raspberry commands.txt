@@ -1,4 +1,4 @@
 ssh pi@192.168.9.189
-scp -rp pi@192.168.9.189:/home/pi/photos ~/Downloads/
 
+scp -rp pi@192.168.9.189:/home/pi/photos ~/Downloads/
 rsync -azP --verbose -e ssh pi@192.168.9.200:/home/pi/photos ./Downloads/
