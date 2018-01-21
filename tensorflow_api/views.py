@@ -23,13 +23,6 @@ def items(request):
 
 	return JsonResponse(output, safe=False)
 
-def chart(request):
-	items =  ScannedItem.objects.values('label').annotate(data=Count('label'))
-	return JsonResponse(list(items), safe=False)
-
-def detail(request, item_id):
-	return render(request, 'tensorflow_api/detail.html', { 'item': item })
-
 @csrf_exempt
 def scan(request):
 	file = request.FILES['image']
