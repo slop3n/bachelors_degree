@@ -42,7 +42,7 @@ def scan(request):
 			subject = 'new image ' + category['label']
 			text = 'a new image has been uploaded, it has a ' + str(round(percentage, 3)) + ' percent chance of being ' + category['label']
 
-			email_service.sendmail('slop3n@gmail.com', subject, text)
+			email_service.sendmail('slop3n@gmail.com', subject, text, uploaded_file_url)
 	# else:
 		# email_service.sendmail('slop3n@gmail.com', 'new image', 'an image has been sent from the raspberry but it was not recognized')
 
