@@ -1,6 +1,6 @@
-ssh pi@192.168.9.189
+ssh pi@192.168.9.179
 
-scp -rp pi@192.168.9.189:/home/pi/photos ~/Downloads/
-rsync -azP --verbose -e ssh pi@192.168.9.200:/home/pi/photos ./Downloads/
+scp -rp pi@192.168.9.179:/home/pi/photos ~/Downloads/
+rsync -azP --verbose -e ssh pi@192.168.9.179:/home/pi/photos ./Downloads/
 
-*/1 9-19 * * * sh photo.sh
+*/1 8-19 * * * sh photo.sh
