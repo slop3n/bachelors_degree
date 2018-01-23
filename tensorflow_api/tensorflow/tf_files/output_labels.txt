@@ -1,17 +1,17 @@
-cake
-pizza
-banana
 sandwich
-beer
-roll bread
-tea
-bonbon
-cookie
-apple
-croissant
-whiskey
-burger
 cheese
+apple
+bonbon
 orange
 frenchfries
+burger
+tea
+beer
+whiskey
+pizza
+croissant
 hotdog
+roll bread
+cookie
+banana
+cake
