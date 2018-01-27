@@ -7,11 +7,14 @@ from email import encoders
 
 import argparse
 
+# дефиниция на метода който праща имейли
 def sendmail(to, subject, text, filepath=''):
 	message = MIMEMultipart()
+	# имейл и парола от който ще се изпрати съобщението
 	sender = 'lyubomir.bachelors.degree@gmail.com'
 	password = 'verysecurepassword'
 
+	# параметри на съобщението
 	message['To'] = to
 	message['From'] = sender
 	message['Subject']= subject
@@ -19,6 +22,7 @@ def sendmail(to, subject, text, filepath=''):
 	try:
 		message.attach(MIMEText(text,'plain'))
 		
+		# ако има подаден път на изображение то се опитва да бъде прикачено към имейла
 		if filepath:
 			attachment = open(filepath, 'rb')
 			part = MIMEBase('application', 'octet-stream')
@@ -27,19 +31,19 @@ def sendmail(to, subject, text, filepath=''):
 			part.add_header('Content-Disposition', "attachment; filename= %s" % basename(filepath))
 			message.attach(part)
 
+		# прави се връзка със Google пощата и се упълномощява пощата от която ще се прати съобщението
 		connection = SMTP('smtp.gmail.com')
 		connection.login(sender, password)
+		# изпращане на съобщението
 		connection.sendmail(sender, to, message.as_string())
+		# затваря се връзката с пощата
 		connection.close()
-
-		print('email sent')
 	except Exception as e:
-		print(e)
-		print('exception occured')
+		# в случай на грешка не се случва нищо
 
 if __name__ == "__main__":
 
-	# some default values in case no arguments are given
+	# стойности по подразбиране ако програмата се извика без параметри
 	to = "slop3n@gmail.com"
 	subject = "cat facts"
 	message = "hello, you just subscribed to cat facts daily"
@@ -57,4 +61,5 @@ if __name__ == "__main__":
 	if args.message:
 		message = args.message
 
+	# извикване на метода който ще прати имейла
 	sendmail(to, subject, message)

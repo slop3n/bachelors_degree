@@ -23,8 +23,9 @@ import os
 
 import numpy as np
 import tensorflow as tf
+
 django_dir = "tensorflow_api/tensorflow/"
-# django_dir  = ""
+# стойности по подразбиране ако програмата се извика без параметри
 file_name = ""
 model_file = django_dir + "tf_files/retrained_graph.pb"
 label_file = django_dir + "tf_files/retrained_labels.txt"
@@ -35,8 +36,10 @@ input_std = 128
 input_layer = "input"
 output_layer = "final_result"
 
+# дефиниция на метода който класифицира изображенията
 def classify(image):
   print('dir: ' + os.getcwd())
+  # зарежда се тренирания граф и се подават входните параметри
   graph = load_graph(model_file)
   t =  read_tensor_from_image_file(image, input_height, input_width, input_mean, input_std)
 
@@ -48,16 +51,25 @@ def classify(image):
           {input_operation.outputs[0]: t})
   results = np.squeeze(results)
 
+  # зарежда се файла с етикетите
   labels = load_labels(label_file)
+  # взимат се резултатите минали през невронната мрежа и се сортират в низходящ ред
   top_sorted_indices = results.argsort()[:][::-1]
+  # взима се първия резултат
   top_element = top_sorted_indices[0]
+  # дефинира се променлива с име и вероятност на първия резултат
   element = {'label': labels[top_element], 'probability': results[top_element]}
 
+  # прави се проверка дали вероятността е над 50%
   if element['probability'] > 0.50:
+    # връща се елемента който е бил разпознат
     return element
 
+  # връща се празен обект тъй като невронната мрежа не е разпознала
+  # с 50% или повече изображението
   return {}
 
+# дефиниция на метода който зарежда тренирания граф
 def load_graph(model_file):
   graph = tf.Graph()
   graph_def = tf.GraphDef()
@@ -74,6 +86,8 @@ def read_tensor_from_image_file(file_name, input_height=299, input_width=299,
   input_name = "file_reader"
   output_name = "normalized"
   file_reader = tf.read_file(file_name, input_name)
+
+  # изображението се подава на правилния четец спрямо неговото разширение
   if file_name.endswith(".png"):
     image_reader = tf.image.decode_png(file_reader, channels = 3, name='png_reader')
   elif file_name.endswith(".gif"):
@@ -82,6 +96,7 @@ def read_tensor_from_image_file(file_name, input_height=299, input_width=299,
     image_reader = tf.image.decode_bmp(file_reader, name='bmp_reader')
   else:
     image_reader = tf.image.decode_jpeg(file_reader, channels = 3, name='jpeg_reader')
+
   float_caster = tf.cast(image_reader, tf.float32)
   dims_expander = tf.expand_dims(float_caster, 0);
   resized = tf.image.resize_bilinear(dims_expander, [input_height, input_width])
@@ -91,6 +106,7 @@ def read_tensor_from_image_file(file_name, input_height=299, input_width=299,
 
   return result
 
+# дефиниция на метода който зарежда файла с етикетите
 def load_labels(label_file):
   label = []
   proto_as_ascii_lines = tf.gfile.GFile(label_file).readlines()
