@@ -15,7 +15,10 @@ from . import email_service
 import datetime
 
 def index(request):
-	return render(request, 'tensorflow_api/index.html')
+	return render(request, 'tensorflow_api/index.html', { 'validation': False })
+
+def validation(request):
+	return render(request, 'tensorflow_api/index.html', { 'validation' : True })
 
 def items(request):
 	items =  ScannedItem.objects.order_by('-scanned_on')
@@ -25,7 +28,12 @@ def items(request):
 
 @csrf_exempt
 def scan(request):
+	if not request.FILES:
+		return HttpResponseRedirect(reverse('tensorflow_api:validation'))
 	file = request.FILES['image']
+	if not (file.name.endswith('.jpg') or file.name.endswith('.jpeg') or file.name.endswith('.png')):
+		return HttpResponseRedirect(reverse('tensorflow_api:validation'))
+
 	fs = FileSystemStorage();
 	filename = fs.save('images/'+file.name, file)
 	uploaded_file_url = fs.url(filename)
