@@ -54,10 +54,10 @@
 	    {% endif %}
 
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-7">
 				<div id="items-grid"></div>
 			</div>
-				<div class="col-md-3">
+				<div class="col-md-2">
 				<h4>The neural network is trained to recognize the following categories:</h2>
 				<ol>
 					<li>apples</li>
@@ -115,10 +115,8 @@
 				},
 				filterable: true,
 				pageable: {
-					input: true,
-					numeric: false
+					pageSizes:[10,20,50, "all"],
 				},
-
 				groupable:true,
 				sortable: true,
 				columns: [{
